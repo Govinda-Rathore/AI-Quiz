@@ -78,7 +78,7 @@ const Results = () => {
         </div>
 
         <div className="flex justify-center">
-          <button onClick={handleTryAgain} className="h-11 rounded-md px-8">
+          <button onClick={handleTryAgain} className="flex text-xl justify-center items-center h-11 rounded-md px-8 border bg-blue-300 hover:bg-blue-400">
             <RotateCcw className="w-4 h-4 mr-2" />
             Try Another Quiz
           </button>

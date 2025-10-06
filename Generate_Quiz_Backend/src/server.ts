@@ -19,7 +19,6 @@ interface OpenAIResponse {
 
 app.post("/api/generate-quiz", async (req: Request, res: Response) => {
   const { topic } = req.body;
-  console.log("📩 Topic received:", topic);
 
   try {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -34,35 +33,26 @@ app.post("/api/generate-quiz", async (req: Request, res: Response) => {
           {
             role: "system",
             content:
-              "You are a quiz generator. Return ONLY valid JSON matching this schema: { questions: [{ question: string, options: string[], answer: string }] }",
+              "You are a quiz generator. Always return **unique** and **non-repetitive** questions each time. Return ONLY valid JSON matching this schema: { questions: [{ question: string, options: string[], answer: string }] }",
           },
           {
             role: "user",
             content: `Generate exactly 5 MCQs about ${topic}. Each question must have 4 options and 1 correct answer.`,
           },
         ],
-        temperature: 0.7,
-        // ✅ Forces JSON output, avoids markdown issues
+        temperature: 0.9,
         response_format: { type: "json_object" },
       }),
     });
 
     const data: any = await response.json();
-    // console.log("📨 Raw OpenAI response:", JSON.stringify(data, null, 2));
-
     const content = data.choices?.[0]?.message?.content;
-
-    console.log("\n Content=> \n")
-    console.log(content)
-
-
     if (!content) {
       throw new Error("No content in OpenAI response");
     }
 
     const quiz = JSON.parse(content) as OpenAIResponse;
-    console.log("\n quiz \n")
-    console.log(quiz)
+    // console.log(quiz)
     res.json(quiz);
   } catch (err) {
     console.error("❌ Error generating quiz:", err);
@@ -103,16 +93,13 @@ app.post("/api/quiz-feedback", async (req: Request, res: Response) => {
     });
 
     const data: any = await response.json();
-    console.log("📨 Feedback raw response:", JSON.stringify(data, null, 2));
-
     const content = data.choices?.[0]?.message?.content;
-    console.log("\nContent=> \n")
-    console.log(content);
     if (!content) {
       throw new Error("No feedback returned from OpenAI");
     }
 
     const feedbackData = JSON.parse(content) as { feedback: string };
+    // console.log(feedbackData)
     res.json(feedbackData);
   } catch (err) {
     console.error("❌ Error generating feedback:", err);

@@ -17,7 +17,7 @@ const QuizQuestion = ({ question, questionIndex }: QuizQuestionProps) => {
   };
 
   return (
-    <div className="p-6 md:p-8 space-y-6 rounded-lg border shadow-sm">
+    <div className="p-6 md:p-8 space-y-6 rounded-lg border shadow-sm ">
       <h2 className="text-xl md:text-2xl font-semibold leading-relaxed">
         {question.question}
       </h2>

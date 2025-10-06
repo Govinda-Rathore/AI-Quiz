@@ -66,7 +66,7 @@ const TopicSelection = () => {
           <button
             onClick={handleStartQuiz}
             disabled={!selectedTopic}
-            className="px-8 h-11 rounded-md bg-black text-white hover:bg-black/90"
+            className="px-8 h-11 rounded-md bg-black text-white hover:bg-black/80"
           >
             Start Quiz
           </button>

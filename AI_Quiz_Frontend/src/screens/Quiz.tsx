@@ -38,10 +38,10 @@ const Quiz = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 ">
       <div className="max-w-3xl w-full space-y-6 animate-fade-in">
         <div className="space-y-2">
-          <div className="flex justify-between items-center text-sm ">
+          <div className="flex justify-between items-center text-md">
             <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
             <span>{Math.round(progress)}% Complete</span>
           </div>
