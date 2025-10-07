@@ -9,7 +9,7 @@ export interface QuizQuestion {
 export async function generateQuiz(topic: string): Promise<QuizQuestion[]> {
 
   try {
-    const res = await fetch("http://localhost:5000/api/generate-quiz", {
+    const res = await fetch(`${import.meta.env.API_URL}/api/generate-quiz`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ topic }),
@@ -30,7 +30,7 @@ export const generateFeedback = async (
   topic: string
 ): Promise<string> => {
   try {
-    const res = await fetch("http://localhost:5000/api/quiz-feedback", {
+    const res = await fetch(`${import.meta.env.API_URL}/api/quiz-feedback`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ score, total, topic }),
