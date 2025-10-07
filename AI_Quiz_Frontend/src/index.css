@@ -1,3 +1,2 @@
-@import "./app.css";
-
+@import "tailwindcss"
 /* Optional: add Tailwind preflight or reset if not included in app.css */
