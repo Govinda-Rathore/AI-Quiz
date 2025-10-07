@@ -25,10 +25,10 @@ Then open your browser at:
 **[http://localhost:5173](http://localhost:5173)** (React frontend)
 **[http://localhost:5000](http://localhost:5000)** (Express backend)
 
-### 🎥 Demo
+###  Demo
 
-Attach a **screen recording** or **hosted web link** showing:
-deployed on vercel: https://ai-quiz-ruby.vercel.app
+Deployed on vercel: 
+**https://ai-quiz-ruby.vercel.app)**
 
 ---
 
@@ -70,6 +70,7 @@ content: "You are a quiz generator. Always return **unique** and **non-repetitiv
 
 role: "user",
 content: `Generate exactly 5 MCQs about ${topic}. Each question must have 4 options and 1 correct answer.`,
+```
 
 **Fixes:**
 Enhancement 1 — Enforce Output Schema & Types
