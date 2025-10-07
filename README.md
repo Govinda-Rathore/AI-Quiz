@@ -28,7 +28,7 @@ Then open your browser at:
 ###  Demo
 
 Deployed on vercel: 
-**https://ai-quiz-ruby.vercel.app)**
+**https://ai-quiz-ruby.vercel.app**
 
 ---
 
