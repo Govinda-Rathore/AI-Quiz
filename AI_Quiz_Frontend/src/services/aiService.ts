@@ -7,13 +7,15 @@ export interface QuizQuestion {
 
 
 export async function generateQuiz(topic: string): Promise<QuizQuestion[]> {
-
+  
   try {
-    const res = await fetch(`${import.meta.env.API_URL}/api/generate-quiz`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/generate-quiz`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ topic }),
     });
+    console.log("\nurl\n")
+    console.log(import.meta.env.VITE_API_URL)
     if (!res.ok) throw new Error("Failed to generate quiz");
     const data = await res.json();
     // console.log(" \naiService Data=> \n")
@@ -24,17 +26,20 @@ export async function generateQuiz(topic: string): Promise<QuizQuestion[]> {
   }
 }
 
+
 export const generateFeedback = async (
   score: number,
   total: number,
   topic: string
 ): Promise<string> => {
   try {
-    const res = await fetch(`${import.meta.env.API_URL}/api/quiz-feedback`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/quiz-feedback`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ score, total, topic }),
     });
+    console.log("\nurl\n")
+    console.log(import.meta.env.VITE_API_URL)
     if (!res.ok) throw new Error("Failed to generate feedback");
     const data = await res.json();
     // console.log("\nFeedback=>\n")
