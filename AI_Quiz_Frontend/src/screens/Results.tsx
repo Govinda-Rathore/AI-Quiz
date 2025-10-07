@@ -1,38 +1,46 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuiz } from "../contexts/QuizContext";
 import { generateFeedback } from "../services/aiService";
 import { Trophy, RotateCcw, Loader2 } from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
 
 const Results = () => {
   const { questions,calculateScore, topic, resetQuiz } = useQuiz();
   const [feedback, setFeedback] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  const hasLoaded = useRef(false);
 
   const score = calculateScore() ;
   const percentage = questions.length > 0 ? (score / questions.length) * 100 : 0;
 
   useEffect(() => {
-    if (questions.length === 0) {
-      navigate("/");
-      return;
-    }
+    if (!hasLoaded.current) {
+      hasLoaded.current = true; // Set the flag immediately.
 
-    const loadFeedback = async () => {
-      try {
-        const aiFeeback = await generateFeedback(score, questions.length, topic);
-        setFeedback(aiFeeback);
-      } catch (error) {
-        console.error("Failed to generate feedback:", error);
-        setFeedback("Great job completing the quiz!");
-      } finally {
-        setLoading(false);
+      if (questions.length === 0) {
+        toast.error("No quiz data found. Redirecting home.");
+        setTimeout(() => navigate("/"), 1500);
+        return; // Return early to prevent further execution.
       }
-    };
 
-    loadFeedback();
+      const loadFeedback = async () => {
+        try {
+          const aiFeedback = await generateFeedback(score, questions.length, topic);
+          setFeedback(aiFeedback);
+          toast.success("Your personalized feedback is ready!");
+        } catch (error) {
+          console.error("Failed to generate feedback:", error);
+          toast.error("Could not generate AI feedback.");
+          setFeedback("Great job completing the quiz!");
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      loadFeedback();
+    }
   }, [questions, score, topic, navigate]);
 
   const handleTryAgain = () => {
@@ -40,9 +48,13 @@ const Results = () => {
     navigate("/");
   };
 
+  if (questions.length === 0) {
+    return <div><Toaster position="top-center" /></div>;
+  }
+
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center text-white bg-plum-gradient">
         <div className="text-center space-y-6">
           <Loader2 className="w-16 h-16 animate-spin text-primary mx-auto" />
           <p>Generating your personalized feedback...</p>
@@ -52,7 +64,7 @@ const Results = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-plum-gradient text-white">
       <div className="max-w-2xl w-full p-8 space-y-8 animate-fade-in ">
         <div className="text-center space-y-4">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-4">
