@@ -6,6 +6,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
+const port=process.env.PORT || 5000
 
 interface Question {
   question: string;
@@ -107,6 +108,6 @@ app.post("/api/quiz-feedback", async (req: Request, res: Response) => {
   }
 });
 
-app.listen(5000, () =>
-  console.log("✅ Backend running on http://localhost:5000")
+app.listen(port, () =>
+  console.log(`✅ Backend running on http://localhost:${port}`)
 );
