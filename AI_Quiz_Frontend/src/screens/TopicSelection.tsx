@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuiz } from "../contexts/QuizContext";
 import { Brain, Heart, Laptop, Globe, Lightbulb, Book } from "lucide-react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const topics = [
   { name: "Wellness", icon: Heart, color: "text-pink-500" },
